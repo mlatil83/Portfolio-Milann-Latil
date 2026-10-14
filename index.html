@@ -1,0 +1,842 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Milann LATIL — Portfolio BUT GEA</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style id="css">
+:root{
+  --bg:#F4F5F7;--surface:#FFFFFF;--ink:#1C2128;--muted:#5A636E;--line:#E1E4E8;
+  --brand:#2D3748;--brand-ink:#FFFFFF;--hero:#232B36;--soft:#EEF0F3;
+  --accent:#3F6B6E;--accent-ink:#FFFFFF;--danger:#A4332B;
+  --m1:#A4332B;--m2:#8A5A12;--m3:#3A5F8A;--m4:#2F6B4F;
+  --radius:16px;--shadow:0 1px 2px rgba(28,33,40,.06),0 8px 24px rgba(28,33,40,.06);
+  --fh:"Plus Jakarta Sans",Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --fb:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#12161B;--surface:#1A2027;--ink:#E8EBEF;--muted:#9AA3AF;--line:#2B333C;
+    --brand:#B8C2CF;--brand-ink:#12161B;--hero:#1D242D;--soft:#222A33;
+    --accent:#6FA3A6;--accent-ink:#0F1417;
+    --m1:#F0968C;--m2:#E0B36B;--m3:#8FB1D8;--m4:#7FCBA0;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#12161B;--surface:#1A2027;--ink:#E8EBEF;--muted:#9AA3AF;--line:#2B333C;
+  --brand:#B8C2CF;--brand-ink:#12161B;--hero:#1D242D;--soft:#222A33;
+  --accent:#6FA3A6;--accent-ink:#0F1417;
+  --m1:#F0968C;--m2:#E0B36B;--m3:#8FB1D8;--m4:#7FCBA0;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 76px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--fb);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,h5{font-family:var(--fh);line-height:1.2;margin:0;color:var(--ink)}
+p{margin:0}
+a{color:var(--brand)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+
+/* Navigation */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);background:color-mix(in srgb,var(--surface) 92%,transparent);-webkit-backdrop-filter:saturate(1.4) blur(10px);backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
+.nav-in{max-width:1040px;margin:0 auto;padding:10px 24px;display:flex;align-items:center;gap:8px 16px;flex-wrap:wrap}
+.brand{font-family:var(--fh);font-weight:800;color:var(--brand);text-decoration:none;white-space:nowrap}
+.links{display:flex;gap:2px;flex:1;min-width:0;align-items:center;flex-wrap:wrap}
+.links a,.mbtn{padding:8px 12px;border-radius:999px;color:var(--muted);text-decoration:none;font:500 14px var(--fb);white-space:nowrap;background:transparent;border:0;cursor:pointer}
+.links a:hover,.mbtn:hover{background:var(--soft);color:var(--brand)}
+.links a[aria-current="page"],.mbtn.on{background:var(--soft);color:var(--brand);font-weight:600}
+.more{position:relative}
+.menu{display:none;position:absolute;top:calc(100% + 6px);left:0;min-width:340px;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:6px;z-index:25}
+.menu a{display:block;border-radius:10px;white-space:normal}
+.more.open .menu{display:block}
+
+/* Boutons */
+.btn{font:600 14px/1 var(--fb);border:0;border-radius:999px;padding:11px 18px;background:var(--brand);color:var(--brand-ink);cursor:pointer;white-space:nowrap}
+a.btn{display:inline-block;text-decoration:none}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--brand);box-shadow:inset 0 0 0 1.5px var(--line)}
+.btn.sm{padding:9px 14px}
+.btn.add{background:var(--soft);color:var(--brand);border-radius:12px;padding:14px 18px;width:100%;box-shadow:inset 0 0 0 1.5px var(--line)}
+.btn.cta{background:#FFFFFF;color:#1C2128}
+.btn[disabled]{opacity:.6;cursor:default}
+.del{font:500 13px/1 var(--fb);color:var(--danger);background:transparent;border:1px solid var(--line);border-radius:999px;padding:8px 12px;cursor:pointer;white-space:nowrap}
+.del[data-arm="1"]{background:var(--danger);color:#fff;border-color:var(--danger)}
+
+/* Bandeaux */
+.hero,.phead{background:var(--hero);color:#fff;position:relative;overflow:hidden}
+.hero::after,.phead::after{content:"";position:absolute;right:0;bottom:0;width:340px;height:340px;background:rgba(255,255,255,.07);clip-path:polygon(100% 0,100% 100%,0 100%);pointer-events:none}
+.hero .wrap{display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center;padding-top:64px;padding-bottom:72px;position:relative;z-index:1}
+.phead .wrap{padding-top:44px;padding-bottom:48px;position:relative;z-index:1}
+.eyebrow{display:flex;align-items:center;gap:12px;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.8);margin-bottom:16px}
+.eyebrow::before{content:"";width:36px;height:4px;border-radius:4px;background:rgba(255,255,255,.55)}
+.hero h1{color:#fff;font-size:clamp(34px,6vw,58px);font-weight:800;letter-spacing:-.02em;margin-bottom:12px}
+.phead h1{color:#fff;font-size:clamp(28px,5vw,42px);font-weight:800;letter-spacing:-.02em;margin-bottom:8px}
+.phead p{color:rgba(255,255,255,.86);max-width:64ch}
+.hero .role{font-size:clamp(17px,2.4vw,21px);color:rgba(255,255,255,.94);max-width:40ch;margin-bottom:6px}
+.hero .school{color:rgba(255,255,255,.78);margin-bottom:18px}
+.hero .pitch{color:rgba(255,255,255,.92);max-width:60ch;margin:6px 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.chip{display:inline-block;padding:6px 14px;border-radius:999px;font-size:14px;font-weight:500;background:rgba(255,255,255,.14);color:#fff}
+.chip.kw{background:transparent;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.55)}
+.avatar{width:176px;height:176px;border-radius:50%;border:4px solid rgba(255,255,255,.28);background:#3B4856;display:grid;place-items:center;overflow:hidden;font:800 56px var(--fh);color:#fff;flex:none}
+.avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.photo-wrap{display:flex;flex-direction:column;align-items:center;gap:12px}
+.photo-wrap .btn{background:rgba(255,255,255,.16);color:#fff}
+
+/* Sections et cartes */
+.main{padding-top:40px;padding-bottom:96px}
+.stack>*+*{margin-top:28px}
+.sec-h{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.sec-h h2{font-size:clamp(22px,3.4vw,28px);font-weight:800;letter-spacing:-.015em}
+.lead{color:var(--muted);max-width:68ch;margin-bottom:20px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow)}
+.ct{font-size:19px;font-weight:700;margin-bottom:12px}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.tile{display:flex;flex-direction:column;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px;text-decoration:none;color:var(--ink);box-shadow:var(--shadow)}
+.tile:hover{border-color:var(--brand)}
+.tile b{font-family:var(--fh);font-size:17px;color:var(--brand)}
+.tile span{color:var(--muted);font-size:14.5px}
+.tl{border-top:5px solid var(--line)}
+.tl.now{border-top-color:var(--accent)}
+.tl .yr{font:800 14px var(--fh);letter-spacing:.08em;color:var(--brand);text-transform:uppercase;margin-bottom:6px;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.tl .tag{font:600 13px var(--fb);background:var(--accent);color:var(--accent-ink);border-radius:999px;padding:3px 10px;text-transform:none;letter-spacing:0}
+.tl .goal{color:var(--muted);font-size:14.5px}
+
+/* Fiches */
+.list{display:grid;gap:20px}
+.item{padding:28px}
+.ih{display:flex;gap:16px;align-items:flex-start;justify-content:space-between;margin-bottom:6px}
+.ih-main{flex:1;min-width:0}
+.it{font-size:22px;font-weight:800;letter-spacing:-.01em}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;align-items:center}
+.meta .f{display:inline-block;background:var(--soft);color:var(--brand);padding:4px 12px;border-radius:999px;font-size:14px;font-weight:600;min-width:2ch}
+.ml{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+.fiche{margin:14px 0 0}
+.fiche .row{display:grid;grid-template-columns:220px 1fr;gap:16px;padding:12px 0;border-top:1px solid var(--line)}
+.fiche dt{font-weight:600;font-size:14px;color:var(--muted)}
+.fiche dd{margin:0;min-width:0}
+.badge{display:inline-block;padding:5px 14px;border-radius:999px;font-size:14px;font-weight:600;background:var(--soft);color:var(--ink)}
+.badge.m1{background:color-mix(in srgb,var(--m1) 15%,var(--surface));color:var(--m1)}
+.badge.m2{background:color-mix(in srgb,var(--m2) 15%,var(--surface));color:var(--m2)}
+.badge.m3{background:color-mix(in srgb,var(--m3) 15%,var(--surface));color:var(--m3)}
+.badge.m4{background:color-mix(in srgb,var(--m4) 15%,var(--surface));color:var(--m4)}
+.empty{border:2px dashed var(--line);border-radius:var(--radius);padding:34px 26px;text-align:center;color:var(--muted)}
+.empty b{display:block;color:var(--ink);font-family:var(--fh);font-size:17px;margin-bottom:4px}
+.addw{margin-top:20px}
+.hint{color:var(--muted);font-size:14px}
+.note{background:var(--soft);border-left:4px solid var(--accent);border-radius:10px;padding:12px 16px;font-size:14.5px;color:var(--ink)}
+select{font:500 15px var(--fb);color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:9px 12px;max-width:100%}
+details.meth{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:0}
+details.meth summary{cursor:pointer;padding:16px 22px;font:700 17px var(--fh);color:var(--brand)}
+details.meth .method{padding:0 22px 22px}
+.method{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.method .n{width:32px;height:32px;border-radius:50%;background:var(--brand);color:var(--brand-ink);display:grid;place-items:center;font:700 14px var(--fh);margin-bottom:10px}
+.method h4{font-size:16px;margin-bottom:6px}
+.method ul{margin:0;padding-left:18px;color:var(--muted);font-size:14.5px}
+
+/* Tableaux */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+.tb{border-collapse:collapse;width:100%;font-size:14.5px}
+.tb th{text-align:left;font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;padding:12px 14px;background:var(--soft);white-space:nowrap}
+.tb td{padding:12px 14px;border-top:1px solid var(--line);vertical-align:top;min-width:120px}
+.tb td .f:not([contenteditable]):empty::before{content:"—";color:var(--muted)}
+
+/* Aide du livret (mode modification) */
+.help{background:var(--soft);border:1px solid var(--line);border-radius:var(--radius)}
+.help summary{cursor:pointer;padding:16px 20px;font:700 16px var(--fh);color:var(--brand)}
+.help-in{padding:0 20px 20px}
+.help h5{font-size:14px;margin:16px 0 6px}
+.help ul{margin:0;padding-left:20px;color:var(--muted);font-size:14.5px}
+.help p{font-size:14.5px;color:var(--muted)}
+.ck{display:flex;gap:10px;align-items:flex-start;padding:6px 0;font-size:14.5px;cursor:pointer}
+.ck input{margin-top:3px;width:18px;height:18px;flex:none}
+
+/* Contact */
+.crow{display:flex;gap:16px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.crow:last-child{border-bottom:0}
+.crow .lab{width:170px;flex:none;font-weight:700;color:var(--muted);font-size:14px}
+.crow .val{flex:1;min-width:0;overflow-wrap:anywhere}
+.cf{display:grid;gap:12px;margin-top:14px}
+.cf label{display:grid;gap:6px;font-weight:600;font-size:14px}
+.cf input,.cf textarea{font:400 15px var(--fb);color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
+.sr{position:absolute;left:-9999px}
+.tile .tn{font:800 30px var(--fh);color:var(--accent);line-height:1;margin-bottom:4px}
+.qte{margin:0;padding:24px 28px;background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--accent);border-radius:var(--radius);font:italic 500 20px/1.6 var(--fh);box-shadow:var(--shadow)}
+.qte cite{display:block;margin-top:12px;font:600 14px var(--fb);color:var(--muted);font-style:normal}
+.kf{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.kf li{background:var(--soft);border-radius:12px;padding:10px 14px;font-weight:600;color:var(--brand)}
+.pn{font:800 13px var(--fh);letter-spacing:.08em;color:var(--brand);text-transform:uppercase;margin-bottom:6px}
+.who{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:start}
+.avatar.sm{width:140px;height:140px;font-size:46px;border:4px solid var(--soft)}
+.critw{padding:0 22px 22px}
+.critw h4{font-size:16px;margin:18px 0 8px}
+.crit{display:flex;flex-wrap:wrap;gap:10px;padding:0;margin:0;list-style:none}
+.crit li{background:var(--soft);color:var(--ink);border-radius:12px;padding:9px 14px;font-size:14.5px}
+.crit li::before{content:"✓";color:var(--m4);font-weight:700;margin-right:8px}
+.hintl{margin:0;padding-left:20px;color:var(--muted);font-size:14.5px}
+.dl{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+
+/* Pied de page */
+.foot{border-top:1px solid var(--line);color:var(--muted);font-size:14px;padding:26px 0 34px;text-align:center}
+
+/* Édition */
+.f{outline:none}
+.f.multi{white-space:pre-wrap;overflow-wrap:anywhere}
+[contenteditable]{outline:1.5px dashed rgba(128,128,128,.55);outline-offset:3px;border-radius:6px;min-height:1.4em;cursor:text}
+[contenteditable]:focus{outline:2px solid var(--accent)}
+[contenteditable]:empty::before{content:attr(data-ph);opacity:.55}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--surface);border-top:1px solid var(--line);padding:12px 24px calc(12px + env(safe-area-inset-bottom,0px));display:flex;gap:12px;align-items:center;justify-content:space-between;box-shadow:0 -6px 24px rgba(0,0,0,.1)}
+.bar .st{font-size:14px;color:var(--muted);flex:1;min-width:0}
+.bar .st b{color:var(--ink)}
+.bar .btns{display:flex;gap:10px}
+body.editing .main{padding-bottom:140px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(90px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:12px;font-size:14px;z-index:40;max-width:90vw;box-shadow:var(--shadow)}
+
+/* Responsive */
+@media (max-width:860px){
+  .grid2,.grid3{grid-template-columns:1fr}
+  .tiles{grid-template-columns:1fr 1fr}
+  .method{grid-template-columns:1fr 1fr}
+  .links{overflow-x:auto;scrollbar-width:none}
+  .links::-webkit-scrollbar{display:none}
+  .more{display:contents}
+  .mbtn{display:none}
+  .menu,.more.open .menu{display:contents}
+  .menu a{display:inline-block}
+}
+@media (max-width:640px){
+  .wrap,.nav-in{padding-left:18px;padding-right:18px}
+  .hero .wrap{grid-template-columns:1fr;gap:28px;padding-top:40px;padding-bottom:52px}
+  .photo-wrap{order:-1;align-items:flex-start}
+  .avatar{width:120px;height:120px;font-size:40px}
+  .tiles,.method{grid-template-columns:1fr}
+  .card,.item{padding:20px}
+  .fiche .row{grid-template-columns:1fr;gap:4px}
+  .crow{flex-direction:column;align-items:flex-start;gap:4px}
+  .crow .lab{width:auto}
+  .ih{flex-direction:column}
+  .who{grid-template-columns:1fr}
+  .bar{flex-direction:column;align-items:stretch}
+  .bar .btns{justify-content:flex-end}
+  .tb thead{display:none}
+  .tb,.tb tbody,.tb tr,.tb td{display:block}
+  .tb tr{border-top:1px solid var(--line);padding:10px 14px}
+  .tb tr:first-child{border-top:0}
+  .tb td{border:0;padding:4px 0}
+  .tb td::before{content:attr(data-label);display:block;font-size:13px;font-weight:600;color:var(--muted)}
+}
+@media print{
+  .nav,.bar,.btn,.del,.hero::after,.phead::after,.toast,.help{display:none!important}
+  :root{padding:0}
+  body{background:#fff}
+  .hero,.phead{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .card{box-shadow:none;break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="application/json" id="data">{"v": 3, "updated": "2026-10-13", "name": "Milann LATIL", "role": "Étudiant en BUT Gestion des Entreprises et des Administrations", "school": "IUT de Toulon · site de Draguignan", "year": "Année universitaire 2026 – 2029", "parcours": "Parcours : à compléter", "photo": "", "pitch": "Étudiant en première année de BUT GEA à l'IUT de Toulon (site de Draguignan), je construis ce portfolio tout au long de mon BUT afin de garder une trace de mes apprentissages, analyser mes réalisations et suivre ma progression.", "keywords": ["", "", ""], "dicton": {"texte": "", "auteur": ""}, "bachelor": {"def": "Le BUT (bachelor universitaire de technologie) Gestion des Entreprises et des Administrations est un diplôme national de niveau bac + 3, préparé en trois ans dans un IUT. Il forme des professionnels capables de gérer et d'organiser l'activité d'une entreprise ou d'une administration : comptabilité et finance, contrôle de gestion, management, ressources humaines, développement commercial et entrepreneuriat.", "chiffres": ["Diplôme national", "Niveau bac + 3", "3 ans · 6 semestres", "180 crédits ECTS"], "contenu": "La formation associe des enseignements généraux et professionnels : gestion, comptabilité, droit, fiscalité, économie, marketing, communication, management, langues vivantes, mathématiques et statistiques appliquées. Elle est organisée par compétences et s'appuie sur des situations d'apprentissage et d'évaluation (SAÉ), des projets et des périodes en entreprise (stage ou alternance).", "parcoursTxt": "La première année est commune. À partir de la deuxième année, l'étudiant choisit un parcours de spécialisation : Contrôle de gestion et pilotage de la performance, Gestion comptable, fiscale et financière, Gestion, entrepreneuriat et management d'activités, ou Gestion et pilotage des ressources humaines. Les débouchés varient selon le parcours choisi.", "poursuite": "À l'issue du BUT, il est possible de s'insérer directement dans la vie active ou de poursuivre ses études (master, école de commerce, licence professionnelle…), jusqu'à bac + 5.", "monparcours": "Je suis actuellement en première année de BUT GEA à l'IUT de Toulon, site de Draguignan (promotion 2026 – 2029).", "referentiel": "", "video": "", "liens": ""}, "intro": ["Comprendre le fonctionnement d'une organisation : ses processus, ses acteurs et son environnement.", "Rechercher, traiter et présenter l'information de gestion pour éclairer les décisions.", "Entretenir et coordonner les relations avec les clients, les fournisseurs, les équipes et les partenaires.", "Imaginer et construire une stratégie qui crée de la valeur pour l'organisation et ses clients.", "Organiser, suivre et faire évoluer les activités de l'organisation pour développer sa chaîne de valeur."], "projets": [], "autoeval": [{"comp": "C1 · Analyser", "ac": "Identifier les différents types d'enjeux", "niveau": "", "ressources": "", "traces": ""}, {"comp": "C1 · Analyser", "ac": "Qualifier les différents types d'organisations", "niveau": "", "ressources": "", "traces": ""}, {"comp": "C1 · Analyser", "ac": "Identifier les relations des acteurs au sein d'un processus", "niveau": "", "ressources": "", "traces": ""}, {"comp": "C2 · Décider", "ac": "Identifier les composantes du système d'information de gestion", "niveau": "", "ressources": "", "traces": ""}, {"comp": "C2 · Décider", "ac": "Rechercher, collecter et traiter les données brutes afin de produire et de diffuser une information structurée", "niveau": "", "ressources": "", "traces": ""}, {"comp": "C2 · Décider", "ac": "Identifier les contraintes qui s'imposent à l'organisation", "niveau": "", "ressources": "", "traces": ""}, {"comp": "C2 · Décider", "ac": "Identifier les risques", "niveau": "", "ressources": "", "traces": ""}, {"comp": "C3 · Piloter", "ac": "Identifier ses qualités individuelles", "niveau": "", "ressources": "", "traces": ""}, {"comp": "C3 · Piloter", "ac": "Identifier les relations inter-personnelles et collectives", "niveau": "", "ressources": "", "traces": ""}], "choixBut1": "", "choixBut1Raison": "", "perso": {"qui": "À compléter au cours de mon année/mon parcours avant le BUT, mes qualités, mes centres d'intérêt.", "projet": "À compléter/ poursuite pro études etc"}, "exps": [], "benevolat": [], "langues": [], "diplomes": [{"date": "2026 – 2029", "intitule": "BUT GEA — IUT de Toulon, site de Draguignan (en cours)"}], "contact": {"email": "milann.latil@gmail.com", "linkedin": "https://www.linkedin.com/in/milann-latil-87a408348", "dispo": "", "delai": "Délai de réponse rapide ", "autres": [{"label": "Numéro de téléphone ", "value": "07 67 57 53 20 "}]}, "checks": {}}</script>
+<script id="app">(function(){
+'use strict';
+var DATA = JSON.parse(document.getElementById('data').textContent);
+var state = JSON.parse(JSON.stringify(DATA));
+var editing = false, canEdit = false, artifactNS = null, dirty = false, saving = false;
+var cur = 'accueil';
+var root = document.getElementById('root');
+
+var CE = (function(){
+  try{ var d=document.createElement('div'); d.setAttribute('contenteditable','plaintext-only'); return d.contentEditable==='plaintext-only' ? 'plaintext-only' : 'true'; }
+  catch(e){ return 'true'; }
+})();
+var FONTS = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap';
+
+/* ---------- Constantes ---------- */
+var MAITRISE=['','Non maîtrisé','Maîtrise partielle','Maîtrise suffisante','Bien maîtrisé'];
+var LV={'Non maîtrisé':'m1','Maîtrise partielle':'m2','Maîtrise suffisante':'m3','Bien maîtrisé':'m4'};
+var CHOIX1=['','C1 — Analyser les processus de l\'organisation','C2 — Aider à la prise de décision','C3 — Piloter les relations avec les parties prenantes'];
+function L(ph){return {t:'line',ph:ph};}
+function M(ph){return {t:'multi',ph:ph};}
+function S(opts,al){return {t:'sel',opts:opts,al:al};}
+
+var COMPS=[
+ {id:'c1',n:1,ac:'C1',aeLab:'C1 · Analyser',t:'Analyser les processus de l\'organisation dans son environnement'},
+ {id:'c2',n:2,ac:'C2',aeLab:'C2 · Décider',t:'Aider à la prise de décision'},
+ {id:'c3',n:3,ac:'C3',aeLab:'C3 · Piloter',t:'Piloter les relations avec les parties prenantes de l\'organisation'},
+ {id:'c4',n:4,ac:'C4',aeLab:'',t:'Concevoir la stratégie de création de valeur'},
+ {id:'c5',n:5,ac:'C5',aeLab:'',t:'Assurer la gestion et le développement de la chaîne de valeur'}
+];
+COMPS.forEach(function(c){ c.lab=c.n+' – '+c.t; });
+var TABS=[
+ {id:'accueil',lab:'Accueil'},
+ {id:'bachelor',lab:'Bachelor GEA',title:'Mon diplôme, le Bachelor GEA',sub:'Comprendre le BUT Gestion des Entreprises et des Administrations en quelques minutes.'}
+].concat(COMPS.map(function(c){ return {id:c.id,lab:c.lab,title:c.lab,sub:'Les réalisations qui illustrent cette compétence.',comp:c}; })).concat([
+ {id:'parcours',lab:'Mon parcours professionnel et personnel',title:'Mon parcours professionnel et personnel',sub:'Qui je suis, mon projet, mes expériences, mes engagements et mes diplômes.'},
+ {id:'contact',lab:'Contact',title:'Contact',sub:'Me joindre facilement et en toute sécurité.'}
+]);
+var YEARS=[
+ {lab:'BUT 1',tag:'Année en cours',goal:'Appréhender la démarche portfolio et l\'appliquer à une compétence (niveau 1).'},
+ {lab:'BUT 2',goal:'Étendre la démarche à deux compétences du parcours choisi.'},
+ {lab:'BUT 3',goal:'Mettre en valeur mes compétences et mes progrès, en lien avec mon projet professionnel.'}
+];
+
+/* ---------- Aide du livret (affichée uniquement en mode modification) ---------- */
+var GUIDE={
+ accueil:{t:'Accueil',o:"Donner une première impression professionnelle : en 30 secondes, le visiteur comprend qui je suis et ce que je recherche.",
+  q:["Qui suis-je en une phrase ?","Quelle formation suis-je et à quelle étape ?","Quel est mon projet professionnel à court terme (stage, alternance, poursuite d'études) ?","Quelles sont les 2 ou 3 compétences que je veux mettre en avant ?"],
+  e:["Une photo de portrait professionnelle (regard franc, fond neutre ; JPG/PNG, 400 × 400 px minimum)","Un titre court : « Étudiant·e en BUT GEA – parcours [nom du parcours] »","Un pitch de 5 lignes maximum","2 à 3 mots-clés (ex. : Comptabilité, Contrôle de gestion, Marketing, RH)","Un bouton ou lien « Me contacter »"],
+  p:[],
+  x:["« Étudiant en BUT 2 GEA parcours Gestion Comptable, Fiscalité et Finance, je m'intéresse à l'analyse financière et à la digitalisation des processus comptables. Je recherche un stage de 8 semaines en cabinet ou en entreprise pour mettre en pratique mes compétences Excel et SQL. »"],
+  c:["Le titre est clair et indique mon année / parcours.","La photo est professionnelle et récente.","Le pitch tient en 5 lignes.","Les mots-clés sont en lien avec ma cible (stage / alternance / poursuite).","Le bouton « Contact » fonctionne."]},
+ competences:{t:'Compétences et réalisations',o:"Mettre en valeur chaque compétence du référentiel par des réalisations (SAÉ, projets, expériences) illustrées par des preuves concrètes et par mon regard personnel.",
+  q:["Quelle était la problématique de la réalisation ?","Quel a été mon rôle au sein de l'équipe ?","Quelles productions ai-je réalisées ?","Qu'est-ce que cette réalisation m'a appris ?","Quel niveau ai-je atteint pour cette compétence ?"],
+  e:["Pour chaque réalisation : contexte, résumé, mon rôle, ce que j'ai appris","Un lien vers le livrable principal (PDF, tableur, visuel) accessible","Des visuels (maquettes, captures, schémas) légendés","Au moins un paragraphe en première personne : mon regard personnel","En BUT 1 (compétences 1 à 3) : la grille d'auto-évaluation des apprentissages critiques"],
+  p:["Le livrable principal (PDF / tableur / visuel)","Attestations de stage ou lettres de recommandation"],
+  x:["SAE 2.03 « Budget prévisionnel d'une PME » — Contexte : PME fictive du secteur artisanal, demande de prévisionnel à 3 ans. Mission : collecte des données, construction du budget en Excel, présentation orale. Production : budget_previsionnel_v2.xlsx + support de présentation. Bilan : meilleure compréhension des liens entre plan commercial et plan financier."],
+  a:"Astuce du livret : pour chaque réalisation, rédige au moins un paragraphe en première personne. Il doit refléter ton regard personnel, pas simplement décrire la consigne. Une compétence n'est pas une copie du référentiel : dans quel contexte l'as-tu mobilisée ? Qu'as-tu appris ? Que ferais-tu différemment ?",
+  c:["Chaque réalisation est présentée avec son contexte, son résumé et mon rôle personnel.","Le livrable est accessible (lien valide, format ouvert).","La compétence est illustrée par au moins une preuve.","Un regard critique / bilan est rédigé.","Les illustrations sont légendées.","Je précise mon niveau de manière honnête."]},
+ parcours:{t:'Mon parcours professionnel et personnel',o:"Présenter ma personnalité, mes motivations, mon projet et mes expériences : la page qui donne une dimension humaine au portfolio.",
+  q:["Qu'est-ce qui m'a poussé à choisir le BUT GEA ?","Quelles sont mes forces et mes axes de progrès ?","Quelles valeurs m'animent dans le travail ?","Quel est mon projet professionnel à 3–5 ans ?","Où, quand, combien de temps pour chaque expérience ? Quelles missions ?","Qu'ai-je appris qui me servira dans la suite de mon parcours ?"],
+  e:["Un portrait court (3 mots pour me décrire, valeurs, touche personnelle)","Mon projet professionnel et personnel","Une fiche par expérience (structure, contrat et dates, poste, missions)","Mon bénévolat et mes engagements","Mes langues et mes diplômes (certifications comprises)"],
+  p:["Attestation de stage et évaluation du tuteur","Attestation de bénévolat ou d'engagement associatif","CV au format PDF (lien)"],
+  x:["« Curieux et rigoureux, j'ai choisi le BUT GEA pour comprendre les rouages financiers des entreprises. Mon objectif : devenir contrôleur de gestion dans une PME industrielle. En dehors des cours, je suis trésorier d'une association étudiante et je pratique le handball en club. »"],
+  c:["Le texte est rédigé à la première personne.","Je mentionne mes motivations et mon projet pro.","Les dates et durées sont exactes.","Aucune donnée confidentielle réelle (noms de clients, chiffres internes).","Les données personnelles sensibles sont limitées (pas d'adresse complète).","Je relis l'orthographe et la syntaxe."]},
+ contact:{t:'Contact',o:"Permettre à un visiteur (enseignant, recruteur, pair) de me joindre facilement et en toute sécurité.",
+  q:["Quelle adresse mail professionnelle vais-je utiliser ?","Quels réseaux / profils puis-je partager ?","Quelles informations donner sans risque (numéro de téléphone, adresse postale) ?","Comment limiter les risques de spam ou d'usurpation ?"],
+  e:["Une adresse mail dédiée au portfolio (ex. : prenom.nom@protonmail.com)","Un lien vers LinkedIn (si le profil est professionnel)","Un formulaire de contact simple (si la plateforme le permet)","Une mention claire : « Réponse sous 7 jours ouvrés. »"],
+  p:["Aucune donnée sensible (RIB, n° de sécurité sociale, adresse personnelle)"],
+  x:["Mail : etudiant.gea.dragui@exemple.fr","LinkedIn : /in/etudiant-gea-dragui (profil vérifié)","Disponibilités : du lundi au vendredi, 9 h – 17 h"],
+  c:["L'adresse mail est professionnelle et sécurisée.","Le profil LinkedIn est complet et cohérent.","Aucun numéro personnel sensible n'est affiché.","Un message type de réponse est prêt.","Le formulaire ou le mail est testé avant publication."]}
+};
+var FINAL=[
+ ['Vérifications de fond',["Toutes les pages sont renseignées (Accueil → Contact)","Chaque compétence présente au moins une réalisation avec une preuve","Mon pitch d'accueil tient en 5 lignes","Mon parcours (expériences, diplômes) est à jour et daté"]],
+ ['Vérifications de forme',["Le menu de navigation est clair","Les couleurs et la typographie sont cohérentes d'une page à l'autre","Les liens fonctionnent (pas de lien mort)","Aucune faute d'orthographe grossière"]],
+ ['Vérifications légales et éthiques',["Aucune donnée personnelle sensible n'est publiée (RIB, n° de sécurité sociale, adresse précise)","Les photos de tiers sont accompagnées d'une autorisation","Les noms d'entreprises sont remplacés par des pseudonymes si nécessaire","Le ton est respectueux et professionnel","Aucune image générée par IA n'est présentée comme une photo de moi"]]
+];
+var FTOTAL=0; FINAL.forEach(function(g){ FTOTAL+=g[1].length; });
+
+/* ---------- Utilitaires ---------- */
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+function rich(t){ return esc(t).replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'); }
+function initials(n){ var p=String(n||'').trim().split(/\s+/).filter(Boolean); return ((p[0]||'')[0]||'').toUpperCase()+((p[p.length-1]||'')[0]||'').toUpperCase(); }
+function setPath(p,v){ var k=p.split('.'),o=state; for(var i=0;i<k.length-1;i++){ o=o[k[i]]; if(o==null) return; } o[k[k.length-1]]=v; }
+function has(o){ for(var k in o){ if(o[k]) return true; } return false; }
+function pHas(p){ return !!(p.titre||p.resume||p.ctx||p.role||p.appris||p.lien); }
+function fmtDate(s){ var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s||''); return m?(m[3]+'/'+m[2]+'/'+m[1]):''; }
+function isUrl(v){ return /^https?:\/\//i.test(String(v||'').trim()); }
+function linkOf(v,label){
+  var t=String(v||'').trim(); if(!t) return '';
+  if(/^https?:\/\//i.test(t)) return '<a href="'+esc(t)+'" target="_blank" rel="noopener noreferrer">'+esc(label||t)+'</a>';
+  if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(t)) return '<a href="mailto:'+esc(t)+'">'+esc(t)+'</a>';
+  return esc(t);
+}
+
+/* ---------- Champs ---------- */
+function field(path,val,o){
+  o=o||{}; var tag=o.tag||'div';
+  var cls='f '+(o.multi?'multi':'line')+(o.cls?' '+o.cls:'');
+  if(editing){
+    return '<'+tag+' class="'+cls+'" contenteditable="'+CE+'" data-path="'+path+'" data-ph="'+esc(o.ph||'')+'" spellcheck="true">'+esc(val)+'</'+tag+'>';
+  }
+  return '<'+tag+' class="'+cls+'">'+(o.link?rich(val):esc(val))+'</'+tag+'>';
+}
+function ctl(path,val,d){
+  d=d||{t:'line'};
+  if(d.t==='sel'){
+    if(editing){
+      return '<select data-path="'+path+'" aria-label="'+esc(d.al||'Choisir')+'">'+d.opts.map(function(m){
+        return '<option value="'+esc(m)+'"'+(m===val?' selected':'')+'>'+(m||'— Choisir —')+'</option>';
+      }).join('')+'</select>';
+    }
+    return val?'<span class="badge '+(LV[val]||'')+'">'+esc(val)+'</span>':'';
+  }
+  return field(path,val,{multi:d.t==='multi',ph:d.ph,link:1});
+}
+function delBtn(list,i){ return '<button class="del" data-act="del" data-list="'+list+'" data-i="'+i+'" type="button">Supprimer</button>'; }
+function card(title,path,val,ph){
+  if(!editing && !val) return '';
+  return '<article class="card"><h3 class="ct">'+title+'</h3>'+field(path,val,{multi:1,link:1,ph:ph})+'</article>';
+}
+function grid(n,cards){ cards=cards.filter(Boolean); return cards.length?'<div class="grid'+n+'">'+cards.join('')+'</div>':''; }
+function secH(t){ return '<div class="sec-h"><h2>'+t+'</h2></div>'; }
+function wrapSec(title,inner,lead){ return inner?'<section>'+secH(title)+(lead?'<p class="lead">'+lead+'</p>':'')+inner+'</section>':''; }
+function rowsHtml(prefix,obj,defs){
+  var h=defs.map(function(d){
+    var v=obj[d[0]]; if(!editing && !v) return '';
+    return '<div class="row"><dt>'+d[1]+'</dt><dd>'+ctl(prefix+d[0],v,d[2])+'</dd></div>';
+  }).join('');
+  return h?'<dl class="fiche">'+h+'</dl>':'';
+}
+function itemCard(key,i,it,cfg){
+  var p=key+'.'+i+'.';
+  var meta=cfg.meta.map(function(d){
+    var v=it[d[0]]; if(!editing && !v) return '';
+    return ctl(p+d[0],v,d[2]);
+  }).join('');
+  return '<article class="card item" data-listcard="'+key+'"><header class="ih"><div class="ih-main">'+
+    field(p+cfg.tk,it[cfg.tk],{tag:'h3',cls:'it',ph:cfg.tph})+(meta?'<div class="meta">'+meta+'</div>':'')+'</div>'+
+    (editing?delBtn(key,i):'')+'</header>'+rowsHtml(p,it,cfg.rows)+'</article>';
+}
+function listBlock(key,cfg,addLabel){
+  var items=state[key].map(function(it,i){return [it,i];}).filter(function(x){return editing||has(x[0]);});
+  var h=items.map(function(x){return itemCard(key,x[1],x[0],cfg);}).join('');
+  if(h) h='<div class="list">'+h+'</div>';
+  if(editing) h+='<div class="addw"><button class="btn add" data-act="add" data-list="'+key+'" type="button">+ '+addLabel+'</button></div>';
+  return h;
+}
+function tableBlock(key,cols,addLabel,pred,pk,pv){
+  var items=state[key].map(function(it,i){return [it,i];}).filter(function(x){return (editing||has(x[0])) && (!pred||pred(x[0]));});
+  if(!items.length && !editing) return '';
+  var head=cols.map(function(c){return '<th scope="col">'+c[1]+'</th>';}).join('')+(editing?'<th scope="col"><span class="sr">Action</span></th>':'');
+  var rows=items.map(function(x){
+    var it=x[0],i=x[1],p=key+'.'+i+'.';
+    return '<tr data-listcard="'+key+'">'+cols.map(function(c){
+      return '<td data-label="'+esc(c[1])+'">'+(ctl(p+c[0],it[c[0]],c[2])||'—')+'</td>';
+    }).join('')+(editing?'<td>'+delBtn(key,i)+'</td>':'')+'</tr>';
+  }).join('');
+  return '<div class="tw"><table class="tb"><thead><tr>'+head+'</tr></thead><tbody>'+rows+'</tbody></table></div>'+
+    (editing?'<div class="addw"><button class="btn add" data-act="add" data-list="'+key+'"'+(pk?' data-pk="'+pk+'" data-pv="'+esc(pv)+'"':'')+' type="button">+ '+addLabel+'</button></div>':'');
+}
+
+/* ---------- Aide du livret ---------- */
+function help(tab){
+  if(!editing) return '';
+  var g=GUIDE[tab]; var ch=state.checks[tab]||[];
+  var done=g.c.filter(function(_,i){return ch[i];}).length;
+  function ul(a){ return a.length?'<ul>'+a.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul>':''; }
+  return '<details class="help"><summary>📘 Aide du livret · '+esc(g.t)+' — checklist <span data-prog="'+tab+'">'+done+'/'+g.c.length+'</span></summary><div class="help-in">'+
+    '<p><b>Objectif.</b> '+esc(g.o)+'</p>'+
+    '<h5>Questions-guides</h5>'+ul(g.q)+
+    '<h5>Éléments à intégrer</h5>'+ul(g.e)+
+    (g.p.length?'<h5>Preuves à joindre</h5>'+ul(g.p):'')+
+    (g.x?'<h5>Exemple adapté au BUT GEA (fictif, tiré du livret)</h5>'+g.x.map(function(x){return '<p>'+esc(x)+'</p>';}).join(''):'')+
+    (g.a?'<p class="note" style="margin-top:12px">'+esc(g.a)+'</p>':'')+
+    '<h5>Checklist de la rubrique</h5>'+g.c.map(function(c,i){
+      return '<label class="ck"><input type="checkbox" data-check="'+tab+'.'+i+'"'+(ch[i]?' checked':'')+'><span>'+esc(c)+'</span></label>';
+    }).join('')+
+    '<p class="hint" style="margin-top:10px">Ce panneau n\'est visible que dans le mode modification.</p></div></details>';
+}
+function finalHelp(){
+  if(!editing) return '';
+  var ch=state.checks.final||[], idx=0, done=ch.filter(Boolean).length;
+  return '<details class="help"><summary>✔ Checklist finale avant de partager — <span data-prog="final">'+done+'/'+FTOTAL+'</span></summary><div class="help-in">'+
+    FINAL.map(function(g){
+      return '<h5>'+g[0]+'</h5>'+g[1].map(function(t){
+        var i=idx++;
+        return '<label class="ck"><input type="checkbox" data-check="final.'+i+'"'+(ch[i]?' checked':'')+'><span>'+esc(t)+'</span></label>';
+      }).join('');
+    }).join('')+
+    '<p class="note" style="margin-top:14px">Tout ce qui figure sur un portfolio en ligne peut être indexé par un moteur de recherche : fais comme s\'il était public.</p>'+
+    '<p class="hint" style="margin-top:10px">Ce panneau n\'est visible que dans le mode modification.</p></div></details>';
+}
+function body(parts){
+  var h=parts.filter(Boolean).join('');
+  if(!editing && !h) h='<div class="empty"><b>Rubrique en cours de construction</b>Les contenus seront ajoutés au fil de l\'année.</div>';
+  return '<div class="stack">'+h+'</div>';
+}
+
+/* ---------- Navigation ---------- */
+function tabById(id){ return TABS.filter(function(t){return t.id===id;})[0]; }
+function navA(t){ return '<a href="#'+t.id+'" data-tab="'+t.id+'"'+(cur===t.id?' aria-current="page"':'')+'>'+esc(t.lab)+'</a>'; }
+function nav(){
+  var isC=COMPS.some(function(c){return c.id===cur;});
+  var menu=COMPS.map(function(c){return navA(tabById(c.id));}).join('');
+  var more='<div class="more"><button class="mbtn'+(isC?' on':'')+'" data-act="more" type="button" aria-haspopup="true" aria-expanded="false">Compétences ▾</button><div class="menu">'+menu+'</div></div>';
+  return '<header class="nav"><div class="nav-in"><a class="brand" href="#accueil" data-tab="accueil">'+esc(state.name)+'</a>'+
+    '<nav class="links" aria-label="Pages du portfolio">'+navA(tabById('accueil'))+navA(tabById('bachelor'))+more+navA(tabById('parcours'))+navA(tabById('contact'))+'</nav>'+
+    ((canEdit&&!editing)?'<button class="btn sm" data-act="edit" type="button">✎ Modifier</button>':'')+
+    '</div></header>';
+}
+function go(id){
+  cur=id; try{ history.replaceState(null,'','#'+id); }catch(e){}
+  render(); window.scrollTo(0,0);
+}
+function tabFromHash(){
+  var h=(location.hash||'').replace('#','');
+  return tabById(h)?h:'accueil';
+}
+
+/* ---------- En-têtes ---------- */
+function hero(){
+  var ph = state.photo ? '<img src="'+esc(state.photo)+'" alt="Photo de '+esc(state.name)+'">' : esc(initials(state.name));
+  var kws=state.keywords.map(function(k,i){
+    if(!editing && !k) return '';
+    return field('keywords.'+i,k,{cls:'chip kw',ph:'Mot-clé '+(i+1)});
+  }).join('');
+  return '<section class="hero" id="top"><div class="wrap"><div>'+
+    '<div class="eyebrow">Portfolio · BUT Gestion des Entreprises et des Administrations</div>'+
+    field('name',state.name,{tag:'h1',ph:'Prénom NOM'})+
+    field('role',state.role,{cls:'role',ph:'Étudiant·e en BUT GEA'})+
+    field('school',state.school,{cls:'school',ph:'Établissement'})+
+    '<div class="chips">'+field('year',state.year,{cls:'chip',ph:'Année universitaire'})+field('parcours',state.parcours,{cls:'chip',ph:'Parcours'})+'</div>'+
+    ((editing||state.pitch)?field('pitch',state.pitch,{multi:1,cls:'pitch',ph:'Mon pitch en 5 lignes maximum : qui je suis, ma formation, mon projet à court terme…'}):'')+
+    (kws?'<div class="chips">'+kws+'</div>':'')+
+    '<a class="btn cta" href="#contact" data-tab="contact">Me contacter</a>'+
+    '</div><div class="photo-wrap"><div class="avatar" role="img" aria-label="Photo de profil">'+ph+'</div>'+
+    (editing?'<button class="btn sm" data-act="photo" type="button">Changer la photo</button><input type="file" id="photoIn" accept="image/*" hidden>':'')+
+    '</div></div></section>';
+}
+function phead(title,sub){
+  return '<section class="phead"><div class="wrap"><div class="eyebrow">Portfolio · '+esc(state.name)+'</div><h1>'+esc(title)+'</h1><p>'+esc(sub)+'</p></div></section>';
+}
+function foot(){
+  var d=fmtDate(state.updated);
+  return '<footer class="foot"><div class="wrap">'+esc(state.name)+' · Portfolio BUT GEA · '+esc(state.school)+(d?' · Dernière mise à jour : '+d:'')+'</div></footer>';
+}
+function bar(){
+  return '<div class="bar" role="region" aria-label="Mode modification"><div class="st">'+(saving?'<b>Enregistrement…</b>':(dirty?'<b>Modifications non enregistrées</b> — pensez à enregistrer.':'<b>Mode modification</b> — cliquez sur un texte pour le changer.'))+'</div>'+
+    '<div class="btns"><button class="btn ghost" data-act="cancel" type="button">Annuler</button><button class="btn" data-act="save" type="button"'+(saving?' disabled':'')+'>Enregistrer</button></div></div>';
+}
+
+/* ---------- Pages : Accueil ---------- */
+function compTiles(withDesc){
+  return '<div class="tiles">'+COMPS.map(function(c){
+    var n=state.projets.filter(function(p){return String(p.c)===String(c.n)&&pHas(p);}).length;
+    var sub=withDesc?esc(state.intro[c.n-1]||''):(n?n+' réalisation'+(n>1?'s':''):'Bientôt');
+    return '<a class="tile" href="#'+c.id+'" data-tab="'+c.id+'"><span class="tn">'+c.n+'</span><b>'+esc(c.t)+'</b><span>'+sub+'</span></a>';
+  }).join('')+'</div>';
+}
+function dicton(){
+  var d=state.dicton; if(!editing && !d.texte) return '';
+  return '<section>'+secH('Mon dicton préféré')+'<blockquote class="qte">'+field('dicton.texte',d.texte,{multi:1,ph:'« Ma citation préférée… »'})+'<cite>'+field('dicton.auteur',d.auteur,{ph:'— Auteur de la citation'})+'</cite></blockquote></section>';
+}
+function tabAccueil(){
+  return '<div class="stack">'+help('accueil')+finalHelp()+
+    '<section>'+secH('Mes réalisations, au travers des 5 compétences professionnelles')+
+    '<p class="lead">Chaque compétence regroupe mes travaux (SAÉ), mes projets étudiants et personnels ainsi que mes expériences professionnelles. Cliquez sur une compétence pour accéder à sa page.</p>'+
+    compTiles(false)+'</section>'+dicton()+'</div>';
+}
+
+/* ---------- Pages : Bachelor GEA ---------- */
+function choixBut1(){
+  if(!editing && !state.choixBut1) return '';
+  return '<article class="card"><h3 class="ct">Ma compétence de BUT 1 (niveau 1)</h3><p class="hint">En BUT 1, j\'applique la démarche portfolio à une compétence au choix, au niveau 1.</p>'+
+    rowsHtml('',state,[['choixBut1','Compétence choisie',S(CHOIX1,'Compétence choisie')],['choixBut1Raison','Pourquoi ce choix ?',M('Ce qui m\'a motivé, les situations qui l\'illustrent…')]])+'</article>';
+}
+function demarche(){
+  return '<section>'+secH('Ma démarche portfolio')+
+    '<p class="lead">Ce portfolio fait partie de ma formation. Il rassemble des réalisations, les traces qui les illustrent et l\'analyse que j\'en fais, afin de mesurer ma progression compétence après compétence.</p>'+
+    '<div class="grid3">'+YEARS.map(function(y){
+      return '<article class="card tl'+(y.tag?' now':'')+'"><div class="yr"><span>'+y.lab+'</span>'+(y.tag?'<span class="tag">'+y.tag+'</span>':'')+'</div><p class="goal">'+y.goal+'</p></article>';
+    }).join('')+'</div></section>';
+}
+function tabBachelor(){
+  var b=state.bachelor;
+  var kf=b.chiffres.map(function(c,i){ if(!editing && !c) return ''; return '<li>'+field('bachelor.chiffres.'+i,c,{ph:'Chiffre clé'})+'</li>'; }).join('');
+  var top=(editing||b.def||kf)?'<div class="grid2">'+card('Qu\'est-ce que le Bachelor GEA ?','bachelor.def',b.def,'Définis le diplôme avec tes mots…')+(kf?'<article class="card"><h3 class="ct">Le diplôme en bref</h3><ul class="kf">'+kf+'</ul></article>':'')+'</div>':'';
+  var links=[['referentiel','Référentiel de compétences'],['video','Vidéo de présentation']];
+  var more;
+  if(editing){
+    more='<article class="card"><h3 class="ct">Pour aller plus loin (liens)</h3><dl class="fiche">'+links.map(function(l){
+      return '<div class="row"><dt>'+l[1]+'</dt><dd>'+field('bachelor.'+l[0],b[l[0]],{ph:'https://…'})+'</dd></div>';
+    }).join('')+'<div class="row"><dt>Autres ressources</dt><dd>'+field('bachelor.liens',b.liens,{multi:1,link:1,ph:'Un lien par ligne'})+'</dd></div></dl></article>';
+  } else {
+    var btns=links.filter(function(l){return isUrl(b[l[0]]);}).map(function(l){
+      return '<a class="btn" href="'+esc(b[l[0]].trim())+'" target="_blank" rel="noopener noreferrer">'+l[1]+'</a>';
+    }).join('');
+    var extra=b.liens?'<div class="f multi" style="margin-top:12px">'+rich(b.liens)+'</div>':'';
+    more=(btns||extra)?'<article class="card"><h3 class="ct">Pour aller plus loin</h3><div class="dl">'+btns+'</div>'+extra+'</article>':'';
+  }
+  return body([top,
+    card('Ce que j\'y apprends','bachelor.contenu',b.contenu,'Les grands domaines étudiés…'),
+    grid(2,[card('Des parcours de spécialisation','bachelor.parcoursTxt',b.parcoursTxt,'Les parcours proposés…'),card('Après le BUT','bachelor.poursuite',b.poursuite,'Insertion professionnelle, poursuite d\'études…')]),
+    '<section>'+secH('Cinq compétences professionnelles')+'<p class="lead">Le diplôme est organisé autour de cinq compétences. Chacune a sa page, qui regroupe mes réalisations.</p>'+compTiles(true)+'</section>',
+    card('Mon parcours de formation','bachelor.monparcours',b.monparcours,'Où j\'en suis dans ma formation…'),
+    demarche(),choixBut1(),more]);
+}
+
+/* ---------- Pages : une compétence ---------- */
+function saeMethod(){
+  return '<details class="meth"><summary>Ma méthode pour analyser une réalisation</summary><div class="method">'+
+    '<div><div class="n">1</div><h4>Présentation</h4><ul><li>Contexte</li><li>Traces</li></ul></div>'+
+    '<div><div class="n">2</div><h4>Actions menées</h4><ul><li>Quelles actions ?</li><li>Pourquoi et comment ?</li></ul></div>'+
+    '<div><div class="n">3</div><h4>Évaluation</h4><ul><li>Ce qui a bien fonctionné</li><li>Ce qui a été difficile</li><li>Ce que je ferais la prochaine fois</li></ul></div>'+
+    '<div><div class="n">4</div><h4>Bilan</h4><ul><li>Degré de maîtrise de la compétence</li></ul></div></div>'+
+    '<div class="critw"><h4>Les critères que je m\'applique</h4><ul class="crit"><li>Respect des consignes et de la situation de communication</li><li>Pertinence du choix de la situation et des traces en fonction de la compétence</li><li>Informations précises, suffisantes et pertinentes</li><li>Qualité de l\'analyse</li><li>Clarté de l\'expression</li></ul></div></details>';
+}
+function projCard(it,i,k){
+  var p='projets.'+i+'.';
+  var rows=[['resume','Résumé',M('Que s\'est-il passé ? Quelle était la problématique, qu\'ai-je produit ?')],['role','Mon rôle',M('Quel a été mon rôle personnel ?')],['appris','Ce que j\'ai appris',M('Ce qui a bien fonctionné, ce qui a été difficile, ce que je ferais autrement…')]];
+  if(editing || !isUrl(it.lien)) rows.push(['lien','Lien vers le document',L('https://… (PDF, tableur, visuel)')]);
+  rows.push(['maitrise','Degré de maîtrise de la compétence',S(MAITRISE,'Degré de maîtrise')]);
+  var btn=(!editing && isUrl(it.lien))?'<div class="dl" style="margin-top:14px"><a class="btn" href="'+esc(it.lien.trim())+'" target="_blank" rel="noopener noreferrer">Consulter le document</a></div>':'';
+  return '<article class="card item" id="proj'+i+'" data-listcard="projets"><header class="ih"><div class="ih-main"><div class="pn">Projet '+('0'+k).slice(-2)+'</div>'+
+    field(p+'titre',it.titre,{tag:'h3',cls:'it',ph:'Intitulé de la réalisation'})+
+    '<div class="meta">'+((editing||it.ctx)?field(p+'ctx',it.ctx,{ph:'Contexte (ex. SAÉ 1.01 · BUT 1 · Entreprise A)'}):'')+'</div></div>'+
+    (editing?delBtn('projets',i):'')+'</header>'+rowsHtml(p,it,rows)+btn+'</article>';
+}
+function autoevalHtml(c){
+  var rowsOf=function(r){ return String(r.comp||'').indexOf(c.ac)===0; };
+  var any=state.autoeval.some(function(r){return rowsOf(r)&&(r.niveau||r.ressources||r.traces);});
+  if(!editing && !any) return '';
+  var tb=tableBlock('autoeval',[['comp','Compétence',L(c.aeLab)],['ac','Apprentissage critique',M('')],['niveau','Auto-évaluation',S(MAITRISE,'Auto-évaluation')],['ressources','Ressources mobilisées',M('Cours, TD, SAÉ…')],['traces','Traces',M('Liens vers les preuves')]],'Ajouter un apprentissage critique',rowsOf,'comp',c.aeLab);
+  return '<section>'+secH('Auto-évaluation des apprentissages critiques (BUT 1)')+
+    '<p class="lead">Après chaque SAÉ, j\'évalue mon degré de maîtrise de chaque apprentissage critique, avec les ressources que j\'ai mobilisées et les traces qui le prouvent.</p>'+tb+'</section>';
+}
+function tabComp(c){
+  var idx=[]; state.projets.forEach(function(p,i){ if(String(p.c)===String(c.n) && (editing||pHas(p))) idx.push(i); });
+  var filled=idx.filter(function(i){return pHas(state.projets[i]);});
+  var intro=(editing||state.intro[c.n-1])?'<article class="card"><h3 class="ct">Cette compétence en bref</h3>'+field('intro.'+(c.n-1),state.intro[c.n-1],{multi:1,link:1,ph:'En quoi consiste cette compétence ?'})+'</article>':'';
+  var sum=filled.length?'<section>'+secH('Liste de mes réalisations pour cette compétence')+'<div class="tw"><table class="tb"><thead><tr><th scope="col">Projet / contexte</th><th scope="col">Réalisation</th></tr></thead><tbody>'+
+    filled.map(function(i){ var p=state.projets[i]; return '<tr><td data-label="Projet / contexte">'+esc(p.ctx||'—')+'</td><td data-label="Réalisation"><a href="#" data-goto="proj'+i+'">'+esc(p.titre||'Sans titre')+'</a></td></tr>'; }).join('')+
+    '</tbody></table></div></section>':'';
+  var list=idx.length?'<section>'+secH('Mes réalisations')+'<div class="list">'+idx.map(function(i,k){return projCard(state.projets[i],i,k+1);}).join('')+'</div></section>':'';
+  var add=editing?'<div class="addw"><button class="btn add" data-act="add" data-list="projets" data-pk="c" data-pv="'+c.n+'" type="button">+ Ajouter une réalisation (SAÉ, projet, expérience)</button></div>':'';
+  var empty=(!editing && !filled.length)?'<div class="empty"><b>Section en cours de construction</b>Mes réalisations pour cette compétence seront ajoutées ici au fil de l\'année.</div>':'';
+  return '<div class="stack">'+help('competences')+intro+sum+list+add+empty+(c.n<=3?autoevalHtml(c):'')+saeMethod()+'</div>';
+}
+
+/* ---------- Page : Mon parcours professionnel et personnel ---------- */
+var CFG={
+ exps:{tk:'employeur',tph:'Employeur — type de structure',meta:[['contrat','Contrat',L('Contrat et dates (ex. Alternance · sept. 2027 – août 2029)')]],
+  rows:[['poste','Poste',L('Intitulé du poste')],['missions','Missions',M('– Mission 1\n– Mission 2')],['lien','Lien',L('https://… (site de la structure)')]]},
+ benevolat:{tk:'structure',tph:'Structure ou association',meta:[['dates','Dates',L('Dates (ex. juin 2021 – juin 2024)')]],
+  rows:[['role','Rôle',L('')],['description','Description',M('Mon engagement, mes actions…')]]}
+};
+function tabParcours(){
+  var ph=state.photo?'<img src="'+esc(state.photo)+'" alt="Photo de '+esc(state.name)+'">':esc(initials(state.name));
+  var qui=(editing||state.perso.qui)?'<article class="card"><div class="who"><div class="avatar sm" role="img" aria-label="Photo de profil">'+ph+'</div><div><h3 class="ct">Qui suis-je ?</h3>'+
+    field('perso.qui',state.perso.qui,{multi:1,link:1,ph:'Présente-toi : d\'où tu viens, 3 mots pour te décrire, tes valeurs, ta touche personnelle…'})+'</div></div></article>':'';
+  var contactCta='<article class="card"><h3 class="ct">Contactez-moi !</h3><p>Pour toute question ou opportunité, n\'hésitez pas à me contacter : je suis disponible pour échanger sur mes compétences, mes expériences et mes ambitions.</p><div class="dl" style="margin-top:14px"><a class="btn" href="#contact" data-tab="contact">Me contacter</a></div></article>';
+  return body([help('parcours'),qui,
+    card('Mon projet professionnel et personnel','perso.projet',state.perso.projet,'Études envisagées, métiers visés, type de stage ou d\'alternance…'),
+    wrapSec('Mes expériences professionnelles',listBlock('exps',CFG.exps,'Ajouter une expérience')),
+    wrapSec('Bénévolat et engagements',listBlock('benevolat',CFG.benevolat,'Ajouter un engagement')),
+    wrapSec('Langues parlées',tableBlock('langues',[['langue','Langue',L('Français')],['niveau','Niveau',L('Langue maternelle, B1, B2…')]],'Ajouter une langue')),
+    wrapSec('Diplômes obtenus',tableBlock('diplomes',[['date','Date',L('Juin 2027')],['intitule','Diplôme ou certification',M('Intitulé, mention éventuelle')]],'Ajouter un diplôme ou une certification')),
+    contactCta]);
+}
+
+/* ---------- Page : Contact (inchangée) ---------- */
+function mailto(email,n,s,m){
+  return 'mailto:'+email+'?subject='+encodeURIComponent(s)+'&body='+encodeURIComponent((m||'')+(n?'\n\n— '+n:''));
+}
+function tabContact(){
+  var c=state.contact;
+  var rows=[
+    ['E-mail','email',c.email?linkOf(c.email):'','adresse professionnelle dédiée au portfolio'],
+    ['LinkedIn','linkedin',linkOf(c.linkedin),'https://www.linkedin.com/in/…'],
+    ['Disponibilités','dispo',esc(c.dispo),'Ex. : du lundi au vendredi, 9 h – 17 h'],
+    ['Délai de réponse','delai',esc(c.delai),'Réponse sous 7 jours ouvrés.']
+  ].filter(function(r){return editing||r[2];}).map(function(r){
+    return '<div class="crow"><div class="lab">'+r[0]+'</div><div class="val">'+(editing?field('contact.'+r[1],c[r[1]],{ph:r[3]}):r[2])+'</div></div>';
+  }).join('');
+  var autres=c.autres.map(function(a,i){return [a,i];}).filter(function(x){return editing||x[0].value;}).map(function(x){
+    var a=x[0],i=x[1],p='contact.autres.'+i+'.';
+    return '<div class="crow" data-listcard="autres"><div class="lab">'+(editing?field(p+'label',a.label,{ph:'Libellé'}):esc(a.label))+'</div><div class="val">'+(editing?field(p+'value',a.value,{ph:'lien, texte…'}):linkOf(a.value))+'</div>'+(editing?delBtn('contact.autres',i):'')+'</div>';
+  }).join('');
+  var add=editing?'<div class="addw"><button class="btn add" data-act="add" data-list="contact.autres" type="button">+ Ajouter un lien ou une information</button></div>':'';
+  var main=(rows||autres)?'<article class="card">'+rows+autres+'</article>':'';
+  var okMail=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(c.email||'');
+  var form=okMail?'<article class="card"><h3 class="ct">Écrire un message</h3><p class="hint">Le message s\'ouvre dans ta messagerie. Ne transmets ni RIB ni numéro de sécurité sociale.</p><div class="cf">'+
+    '<label>Nom<input id="cfN" type="text" autocomplete="name"></label>'+
+    '<label>Objet<input id="cfS" type="text" value="Contact via le portfolio de '+esc(state.name)+'"></label>'+
+    '<label>Message<textarea id="cfM" rows="5"></textarea></label>'+
+    '<div><a class="btn" id="cfGo" href="'+esc(mailto(c.email,'','Contact via le portfolio de '+state.name,''))+'">Envoyer par e-mail</a></div></div></article>':'';
+  return body([help('contact'),
+    editing?'<div class="note">Pas de numéro de téléphone personnel ni d\'adresse postale : le livret demande de ne rien afficher de sensible.</div>':'',
+    main,add]);
+}
+
+
+var TABF={accueil:tabAccueil,bachelor:tabBachelor,parcours:tabParcours,contact:tabContact};
+COMPS.forEach(function(c){ TABF[c.id]=function(){ return tabComp(c); }; });
+
+/* ---------- Rendu ---------- */
+function render(){
+  var y=window.scrollY;
+  var t=tabById(cur)||tabById('accueil');
+  var head=cur==='accueil'?hero():phead(t.title,t.sub);
+  root.innerHTML = nav()+head+'<main class="wrap main" id="contenu">'+TABF[t.id]()+'</main>'+foot()+(editing?bar():'');
+  document.body.classList.toggle('editing',editing);
+  document.title=(t.id==='accueil'?'':t.title+' — ')+state.name+' — Portfolio BUT GEA';
+  window.scrollTo(0,y);
+}
+
+/* ---------- Données ---------- */
+var BLANK={
+  projets:function(){return {c:'',ctx:'',titre:'',resume:'',role:'',appris:'',lien:'',maitrise:''};},
+  autoeval:function(){return {comp:'',ac:'',niveau:'',ressources:'',traces:''};},
+  exps:function(){return {employeur:'',contrat:'',poste:'',missions:'',lien:''};},
+  benevolat:function(){return {structure:'',dates:'',role:'',description:''};},
+  langues:function(){return {langue:'',niveau:''};},
+  diplomes:function(){return {date:'',intitule:''};},
+  'contact.autres':function(){return {label:'',value:''};}
+};
+function listRef(key){ return key==='contact.autres'?state.contact.autres:state[key]; }
+function markDirty(){
+  if(!dirty){ dirty=true; var st=document.querySelector('.bar .st'); if(st) st.innerHTML='<b>Modifications non enregistrées</b> — pensez à enregistrer.'; }
+}
+
+/* ---------- Événements ---------- */
+function onEdit(e){
+  var el=e.target.closest ? e.target.closest('[data-path]') : null;
+  if(!el) return;
+  var v = el.tagName==='SELECT' ? el.value : el.innerText.replace(/\u00a0/g,' ').replace(/\n+$/,'');
+  setPath(el.getAttribute('data-path'),v);
+  markDirty();
+}
+function updMail(){
+  var go=document.getElementById('cfGo'); if(!go) return;
+  var n=document.getElementById('cfN'),s=document.getElementById('cfS'),m=document.getElementById('cfM');
+  go.setAttribute('href',mailto(state.contact.email,n?n.value:'',s?s.value:'',m?m.value:''));
+}
+root.addEventListener('input',function(e){
+  if(e.target && /^cf[NSM]$/.test(e.target.id||'')){ updMail(); return; }
+  onEdit(e);
+});
+root.addEventListener('change',function(e){
+  var t=e.target;
+  if(t && t.id==='photoIn'){ pickPhoto(t.files && t.files[0]); return; }
+  if(t && t.hasAttribute && t.hasAttribute('data-check')){
+    var pr=t.getAttribute('data-check').split('.'),tab=pr[0],i=parseInt(pr[1],10);
+    if(!state.checks[tab]) state.checks[tab]=[];
+    state.checks[tab][i]=t.checked; markDirty();
+    var sp=document.querySelector('[data-prog="'+tab+'"]');
+    var tot=tab==='final'?FTOTAL:(GUIDE[tab]?GUIDE[tab].c.length:0);
+    if(sp && tot){ var n=0; for(var k=0;k<tot;k++){ if(state.checks[tab][k]) n++; } sp.textContent=n+'/'+tot; }
+    return;
+  }
+  onEdit(e);
+});
+root.addEventListener('keydown',function(e){
+  var el=e.target;
+  if(el && el.classList && el.classList.contains('line') && el.hasAttribute('contenteditable') && e.key==='Enter'){ e.preventDefault(); }
+});
+root.addEventListener('paste',function(e){
+  var el=e.target;
+  if(el && el.hasAttribute && el.hasAttribute('contenteditable') && CE!=='plaintext-only'){
+    e.preventDefault();
+    var t=(e.clipboardData||window.clipboardData).getData('text');
+    if(el.classList.contains('line')) t=t.replace(/\s*\n\s*/g,' ');
+    document.execCommand('insertText',false,t);
+  }
+});
+document.addEventListener('click',function(e){
+  var more=document.querySelector('.more.open');
+  if(more && !(e.target.closest && e.target.closest('.more'))){ more.classList.remove('open'); var b=more.querySelector('.mbtn'); if(b) b.setAttribute('aria-expanded','false'); }
+});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){ var more=document.querySelector('.more.open'); if(more){ more.classList.remove('open'); var b=more.querySelector('.mbtn'); if(b){ b.setAttribute('aria-expanded','false'); b.focus(); } } }
+});
+window.addEventListener('hashchange',function(){ var t=tabFromHash(); if(t!==cur){ cur=t; render(); window.scrollTo(0,0); } });
+var armTimer=null;
+root.addEventListener('click',function(e){
+  var tl=e.target.closest ? e.target.closest('[data-tab]') : null;
+  if(tl){ e.preventDefault(); go(tl.getAttribute('data-tab')); return; }
+  var gt=e.target.closest ? e.target.closest('[data-goto]') : null;
+  if(gt){ e.preventDefault(); var tg=document.getElementById(gt.getAttribute('data-goto')); if(tg) tg.scrollIntoView({behavior:'smooth',block:'start'}); return; }
+  var b=e.target.closest ? e.target.closest('[data-act]') : null;
+  if(!b) return;
+  var act=b.getAttribute('data-act');
+  if(act==='more'){
+    var m=b.parentNode, open=!m.classList.contains('open');
+    m.classList.toggle('open',open); b.setAttribute('aria-expanded',open?'true':'false'); return;
+  }
+  if(act==='edit'){ editing=true; dirty=false; render(); }
+  else if(act==='save'){ save(); }
+  else if(act==='cancel'){
+    if(dirty && b.getAttribute('data-arm')!=='1'){
+      b.setAttribute('data-arm','1'); b.textContent='Abandonner les modifications ?';
+      clearTimeout(armTimer); armTimer=setTimeout(function(){ b.removeAttribute('data-arm'); b.textContent='Annuler'; },4000);
+      return;
+    }
+    state=JSON.parse(JSON.stringify(DATA)); editing=false; dirty=false; render();
+  }
+  else if(act==='add'){
+    var l=b.getAttribute('data-list'), it=BLANK[l](), pk=b.getAttribute('data-pk');
+    if(pk) it[pk]=b.getAttribute('data-pv');
+    listRef(l).push(it); markDirty(); render();
+    var sel=l==='contact.autres'?'autres':l;
+    var cards=document.querySelectorAll('[data-listcard="'+sel+'"]');
+    var last=cards[cards.length-1];
+    var first=last?(last.querySelector('[contenteditable]')||last.querySelector('[data-path]')):null;
+    if(first){ first.scrollIntoView({block:'center'}); first.focus(); }
+  }
+  else if(act==='del'){
+    if(b.getAttribute('data-arm')!=='1'){
+      b.setAttribute('data-arm','1'); b.textContent='Confirmer ?';
+      clearTimeout(armTimer); armTimer=setTimeout(function(){ b.removeAttribute('data-arm'); b.textContent='Supprimer'; },3500);
+      return;
+    }
+    listRef(b.getAttribute('data-list')).splice(parseInt(b.getAttribute('data-i'),10),1); markDirty(); render();
+  }
+  else if(act==='photo'){ var inp=document.getElementById('photoIn'); if(inp) inp.click(); }
+});
+
+function pickPhoto(file){
+  if(!file) return;
+  var fr=new FileReader();
+  fr.onload=function(){
+    var img=new Image();
+    img.onload=function(){
+      var side=Math.min(img.width,img.height),S2=480,c=document.createElement('canvas');
+      c.width=S2;c.height=S2;
+      c.getContext('2d').drawImage(img,(img.width-side)/2,(img.height-side)/2,side,side,0,0,S2,S2);
+      state.photo=c.toDataURL('image/jpeg',0.82); markDirty(); render();
+    };
+    img.src=fr.result;
+  };
+  fr.readAsDataURL(file);
+}
+
+/* ---------- Enregistrement ---------- */
+function toast(msg){
+  var t=document.createElement('div'); t.className='toast'; t.setAttribute('role','status'); t.textContent=msg;
+  document.body.appendChild(t); setTimeout(function(){ if(t.parentNode) t.parentNode.removeChild(t); },4500);
+}
+function buildDoc(){
+  var css=document.getElementById('css').textContent;
+  var app=document.getElementById('app').textContent;
+  var data=JSON.stringify(state).replace(/</g,'\\u003c');
+  var ES='</scr'+'ipt>';
+  return '<!doctype html>\n<html lang="fr">\n<head>\n<meta charset="utf-8">\n'+
+    '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'+
+    '<title>'+esc(state.name)+' — Portfolio BUT GEA</title>\n'+
+    '<link href="'+FONTS+'" rel="stylesheet">\n'+
+    '<style id="css">'+css+'</style>\n</head>\n<body>\n<div id="root"></div>\n'+
+    '<script type="application/json" id="data">'+data+ES+'\n'+
+    '<script id="app">'+app+ES+'\n</body>\n</html>\n';
+}
+function save(){
+  if(!artifactNS){ toast('Enregistrement indisponible dans cette vue.'); return; }
+  if(saving) return;
+  saving=true; var st=document.querySelector('.bar .st'); if(st) st.innerHTML='<b>Enregistrement…</b>';
+  state.updated=new Date().toISOString().slice(0,10);
+  artifactNS.publish(buildDoc()).then(function(){
+    saving=false; dirty=false; toast('Portfolio enregistré.');
+  }).catch(function(err){
+    saving=false; var code=err && err.code;
+    var msg='L\'enregistrement a échoué. Réessaie dans un instant.';
+    if(code==='conflict') msg='Une version plus récente existe : la page se recharge.';
+    else if(code==='not_writer'||code==='not_granted'||code==='consent_required'||code==='capability_disabled') msg='Tu n\'as pas le droit de modifier ce portfolio (lecture seule).';
+    else if(code==='too_large') msg='Le portfolio est trop volumineux (photo ou textes).';
+    else if(code==='rate_limited') msg='Trop d\'enregistrements rapprochés : patiente quelques secondes.';
+    toast(msg);
+    var s2=document.querySelector('.bar .st'); if(s2) s2.innerHTML='<b>Modifications non enregistrées</b> — pensez à enregistrer.';
+    var sb=document.querySelector('[data-act="save"]'); if(sb) sb.disabled=false;
+  });
+}
+
+/* ---------- Démarrage ---------- */
+cur=tabFromHash();
+render();
+(function(){
+  if(!window.claude || typeof window.claude.use!=='function') return;
+  Promise.all([window.claude.use('user'),window.claude.use('artifact')]).then(function(r){
+    var u=r[0]; artifactNS=r[1];
+    if(!u||!artifactNS) return;
+    return u.canEdit().then(function(ok){ canEdit=!!ok; if(canEdit && !editing) render(); });
+  }).catch(function(){});
+})();
+})();
+</script>
+</body>
+</html>
